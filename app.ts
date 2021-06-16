@@ -1,14 +1,26 @@
-import * as express from 'express';
-import * as mongoose from 'mongoose';
-import * as Routes from './routes/index';
-import * as dotenv from 'dotenv';
+import * as express from "express";
+import * as mongoose from "mongoose";
+import * as Routes from "./routes/index";
+import * as dotenv from "dotenv";
+
+// if cors required for testing
+// import cors from "cors";
+// app.use(cors());
+
+//initialise the .env file
 dotenv.config();
+
+//set the app
 const app = express();
+
 //listener
 app.listen(19000);
 
+//use json
 app.use(express.json());
-app.use('/posts', Routes.Posts);
+
+//setup routes here
+app.use("/posts", Routes.Posts);
 
 //connect to db
 const connectToDB = async () => {
@@ -25,7 +37,7 @@ connectToDB();
 
 const gracefulExit = () => {
   mongoose.disconnect();
-  console.log('disconnected');
+  console.log("disconnected");
 };
 
-process.on('SIGINT', gracefulExit).on('SIGTERM', gracefulExit);
+process.on("SIGINT", gracefulExit).on("SIGTERM", gracefulExit);
